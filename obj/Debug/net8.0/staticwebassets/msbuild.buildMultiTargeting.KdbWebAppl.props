@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\KdbWebAppl.props" />
+</Project>
