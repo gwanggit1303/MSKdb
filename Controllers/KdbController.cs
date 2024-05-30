@@ -103,4 +103,31 @@ using Microsoft.Extensions.Logging;
         
     }    
     
+        [HttpGet("suppliers")]
+        public async Task<IActionResult> GetSupplierQuantities(string part)
+        {
+            if (string.IsNullOrEmpty(part))
+            {
+                return BadRequest("Part name is required");
+            }
+
+            try
+            {
+                _logger.LogInformation("Executing get part statistics method...");
+    	
+                var partsQuant = _kdbClient.GetStatisticsForPartsQunantity(part);
+    	    if (partsQuant.Count == 0)
+    		{
+    		    _logger.LogWarning("No part quant result retrieved from Kdb+");
+    		}
+                
+                return Ok(partsQuant);                
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception (e.g., log it) and return an appropriate response
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }    
+    
 }

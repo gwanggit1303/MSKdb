@@ -32,3 +32,4 @@ D:\KdbWebAppl\obj\Debug\net8.0\refint\KdbWebAppl.dll
 D:\KdbWebAppl\obj\Debug\net8.0\KdbWebAppl.pdb
 D:\KdbWebAppl\obj\Debug\net8.0\KdbWebAppl.genruntimeconfig.cache
 D:\KdbWebAppl\obj\Debug\net8.0\ref\KdbWebAppl.dll
+D:\KdbWebAppl\obj\Debug\net8.0\KdbWebAppl.sourcelink.json

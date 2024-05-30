@@ -24,6 +24,8 @@ public class KdbClient
     {
         try
         {
+  	_logger.LogInformation($"Conducting query: {query} on kdb");
+        	
             var result = _connection.Sync(query);
             return result;
         }
@@ -87,6 +89,29 @@ public class KdbClient
      _logger.LogWarning("No data retrieved or incorrect result type in method GetStatisticsForPartsQunantities .");
     return new List<Dictionary<string, object>>();
   }
+  
+  
+  public List<Dictionary<string, object>> GetStatisticsForPartsQunantity(String part)
+  {
+	  //var query = "select sum qty by s.name from sp lj `s xkey sp.s where p=`{part}"; // Kdb+ query to select quantities for each part in sp
+	  //var query = $"select sum qty by s.name from sp lj `s xkey sp.s where p=`{part}"; // Kdb+ query to select quantities for each part in sp
+	  
+	  var query = $"select qty: sum qty, name: first name by s from sp lj `s xkey s where p= `{part}";
+	    var result = Execute(query);  
+	  if (result is QKeyedTable keyedTable)
+	    {
+		var partQuanList = new List<Dictionary<string, object>>();
+		
+		partQuanList = convertQKeyedTableToListOfDic(keyedTable, partQuanList);
+  	_logger.LogInformation($"Retrieved {partQuanList.Count} rows from table 'sp'");
+        return partQuanList;		
+	    }
+	    
+	    
+     _logger.LogWarning("No data retrieved or incorrect result type in method GetStatisticsForPartsQunantity .");
+    return new List<Dictionary<string, object>>();
+  }
+  
   
   private List<Dictionary<string, object>> convertQKeyedTableToListOfDic(QKeyedTable keyedTable, List<Dictionary<string, object>> listOfDic)
   {
